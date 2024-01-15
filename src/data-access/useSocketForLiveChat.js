@@ -3,7 +3,7 @@ import { useCookies } from "react-cookie"
 import { v4 as uuid } from "uuid"
 
 const useSocketForLiveChat = (setMsgList) => {
-  const baseUrl = "wss://omnichannel.chatbot.dev137.scw.ringover.net/webchat/websockets/new?app_uuid=e72e2e25-d157-4bb7-951b-db7035356ba6&app_secret=thecakeisalie&user_agent=nicoxflo"
+  const baseUrl = "wss://omnichannel.chatbot.dev137.scw.ringover.net/webchat/websockets/new?agent_uuid=e72e2e25-d157-4bb7-951b-db7035356ba6&agent_secret=thecakeisalie&user_agent=nicoxflo"
   const [socket, setSocket] = useState(null)
   const [cookies, setCookies] = useCookies(["browser_uuid"])
 
