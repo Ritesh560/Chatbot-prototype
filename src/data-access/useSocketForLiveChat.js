@@ -2,12 +2,14 @@ import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import { v4 as uuid } from "uuid"
 
-const useSocketForLiveChat = (setMsgList) => {
-  const baseUrl = "wss://omnichannel.chatbot.dev137.scw.ringover.net/webchat/websockets/new?agent_uuid=e72e2e25-d157-4bb7-951b-db7035356ba6&agent_secret=thecakeisalie&user_agent=nicoxflo"
+const useSocketForLiveChat = (setMsgList, agentUUID) => {
+  const baseUrl = "wss://omnichannel.chatbot.dev137.scw.ringover.net/webchat/websockets/new?agent_secret=thecakeisalie&user_agent=nicoxflo"
   const [socket, setSocket] = useState(null)
   const [cookies, setCookies] = useCookies(["browser_uuid"])
 
   useEffect(() => {
+    if (!agentUUID.length) return
+
     let browser_uuid
     if (!cookies?.browser_uuid) {
       browser_uuid = uuid()
@@ -16,13 +18,15 @@ const useSocketForLiveChat = (setMsgList) => {
       })
     } else browser_uuid = cookies?.browser_uuid
 
-    const api = baseUrl + `&browser_uuid=${browser_uuid}`
+    const api = baseUrl + `&browser_uuid=${browser_uuid}&agent_uuid=${agentUUID}`
 
     setSocket(new WebSocket(api))
-  }, [])
+  }, [agentUUID])
 
   useEffect(() => {
     if (!socket) return
+
+    console.log("initialted")
 
     // Connection opened
     socket.addEventListener("open", (event) => {
