@@ -9,14 +9,7 @@ const useSocketForLiveChat = (setMsgList, agentUUID) => {
 
   useEffect(() => {
     if (!agentUUID.length) return
-
-    let browser_uuid
-    if (!cookies?.browser_uuid) {
-      browser_uuid = uuid()
-      setCookies("browser_uuid", browser_uuid, {
-        path: "/",
-      })
-    } else browser_uuid = cookies?.browser_uuid
+    let browser_uuid = uuid()
 
     const api = baseUrl + `&browser_uuid=${browser_uuid}&agent_uuid=${agentUUID}`
 
