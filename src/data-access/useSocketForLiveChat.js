@@ -5,18 +5,16 @@ import { v4 as uuid } from "uuid"
 const useSocketForLiveChat = (setMsgList, agentUUID) => {
   const baseUrl = "wss://omnichannel.chatbot.dev137.scw.ringover.net/webchat/websockets/new?agent_secret=thecakeisalie&user_agent=nicoxflo"
   const [socket, setSocket] = useState(null)
-  const [cookies, setCookies] = useCookies(["browser_uuid"])
+  const [browserUUID, setBrowserUUID] = useState("")
 
   useEffect(() => {
     if (!agentUUID.length) return
 
     let browser_uuid
-    if (!cookies?.browser_uuid) {
+    if (!browserUUID.length) {
       browser_uuid = uuid()
-      setCookies("browser_uuid", browser_uuid, {
-        path: "/",
-      })
-    } else browser_uuid = cookies?.browser_uuid
+      setBrowserUUID(browserUUID)
+    } else browser_uuid = browserUUID
 
     const api = baseUrl + `&browser_uuid=${browser_uuid}&agent_uuid=${agentUUID}`
 
