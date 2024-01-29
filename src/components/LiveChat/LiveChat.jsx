@@ -8,10 +8,16 @@ const LiveChat = ({ teamCdn }) => {
   const [chatbotConfig, setChatbotConfig] = useState()
 
   const [msgList, setMsgList] = useState([])
-  const [socket] = useSocketForLiveChat(setMsgList)
+  const [uuid, setUUID] = useState("")
+  const [agentUUID, setAgentUUID] = useState("")
 
+  const [socket] = useSocketForLiveChat(setMsgList, agentUUID)
   return (
     <div className={styles.liveChatContainer + " " + styles.opened}>
+      <div className={styles.flex}>
+        <input type="text" value={uuid} className={styles.inputAgentUUID} placeholder="Enter Agent UUID here..." onChange={(e) => setUUID(e.target.value)} />
+        <button onClick={() => setAgentUUID(uuid)}>Enter</button>
+      </div>
       <Chatbox socket={socket} allMessages={msgList} setAllMessages={setMsgList} teamCdn={teamCdn} chatbotConfig={chatbotConfig} setIsBoxOpen={setIsBoxOpen} />
     </div>
   )
